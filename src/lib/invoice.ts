@@ -2,6 +2,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import type { Sale, Settings } from "./types";
 import { fmtDateTime, inr } from "./format";
+import { gkLogoDataUrl } from "./gk-logo";
 
 export const mrpTotal = (sale: Sale) =>
   sale.items.reduce((s, i) => s + Math.max(i.mrp || 0, i.price) * i.qty, 0);
@@ -23,6 +24,18 @@ export function buildInvoicePdf(sale: Sale, s: Settings) {
   doc.setDrawColor(...GREEN);
   doc.setLineWidth(0.4);
   doc.rect(8, 8, W - 16, 281);
+
+  // GK logo watermark in background
+  if (s.showWatermark !== false) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const D = doc as any;
+      D.saveGraphicsState?.();
+      if (D.GState) D.setGState(new D.GState({ opacity: 0.08 }));
+      doc.addImage(s.logo || gkLogoDataUrl(), "PNG", W / 2 - 60, 100, 120, 120);
+      D.restoreGraphicsState?.();
+    } catch { /* ignore */ }
+  }
 
   // Header band with shop name
   doc.setFillColor(...GREEN);
@@ -193,6 +206,14 @@ export function buildInvoicePdf(sale: Sale, s: Settings) {
   doc.setTextColor(...GREY);
   doc.setFontSize(8);
   doc.text(s.footerNote, W / 2, 277, { align: "center" });
+  if (s.wishes) {
+    doc.setTextColor(...GREEN);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+    doc.text(s.wishes, W / 2, 267, { align: "center" });
+    doc.setTextColor(...GREY);
+    doc.setFontSize(8);
+  }
   doc.setFont("helvetica", "bold");
   doc.text(`For ${s.shopName}`, W - 15, 277, { align: "right" });
   doc.setFont("helvetica", "normal");
@@ -277,6 +298,7 @@ export function thermalHtml(sale: Sale, s: Settings) {
   </table>
   <div>${line}</div>
   ${savedAmt(sale) > 0 ? `<div class="c b" style="font-size:13px">*** YOU SAVED Rs ${savedAmt(sale).toFixed(2)} ***</div><div>${line}</div>` : ""}
+  ${s.wishes ? `<div class="c b" style="font-size:13px">${s.wishes}</div>` : ""}
   <div class="c">${s.footerNote}</div>
   <script>window.onload=function(){window.print()}<\/script>
   </body></html>`;
@@ -300,6 +322,7 @@ export function whatsappShare(sale: Sale, s: Settings) {
     `Total: ${inr(sale.total)}`,
     `Paid via ${sale.paymentMethod}`,
     "",
+    ...(s.wishes ? [s.wishes] : []),
     s.footerNote,
   ].join("\n");
   const phone = (sale.customerMobile ?? "").replace(/\D/g, "");
