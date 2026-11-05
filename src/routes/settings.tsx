@@ -52,7 +52,7 @@ function SettingsPage() {
         <div className="space-y-2"><Label>Phone</Label><Input value={f.mobile} onChange={(e) => set("mobile", e.target.value)} /></div>
         <div className="space-y-2"><Label>Invoice prefix</Label><Input value={f.invoicePrefix} onChange={(e) => set("invoicePrefix", e.target.value)} /></div>
         <div className="space-y-2 sm:col-span-2"><Label>Address</Label><Textarea value={f.address} onChange={(e) => set("address", e.target.value)} /></div>
-        <div className="space-y-2 sm:col-span-2"><Label>Wishes on bill</Label><Input value={f.wishes ?? ""} onChange={(e) => set("wishes", e.target.value)} placeholder="e.g. Happy Diwali! 🪔" /></div>
+        <div className="space-y-2 sm:col-span-2"><Label>Wishes on bill</Label><Input value={f.wishes ?? ""} onChange={(e) => set("wishes", e.target.value)} placeholder="e.g. Happy Diwali!" /></div>
         <div className="space-y-2 sm:col-span-2"><Label>Footer note</Label><Input value={f.footerNote} onChange={(e) => set("footerNote", e.target.value)} /></div>
         <div className="flex items-center gap-4 sm:col-span-2">
           <img src={preview} alt="Bill logo" className="size-20 rounded-full border" />
