@@ -259,11 +259,15 @@ export function printA4(sale: Sale, s: Settings) {
 export function thermalHtml(sale: Sale, s: Settings) {
   const w = s.thermalWidth === 58 ? 220 : 300;
   const line = "--------------------------------";
+  const logo = s.showWatermark !== false ? s.logo || gkLogoDataUrl(240) : "";
+  const logoSize = s.thermalWidth === 58 ? 54 : 72;
   return `<html><head><title>${sale.invoiceNo}</title><style>
-  body{font-family:'Courier New',monospace;font-size:12px;width:${w}px;margin:0 auto;padding:8px;color:#000}
+  body{font-family:'Courier New',monospace;font-size:12px;width:${w}px;margin:0 auto;padding:8px;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .c{text-align:center}.r{text-align:right}.b{font-weight:700}
   table{width:100%;border-collapse:collapse}td{font-size:11px;padding:1px 0}
+  .logo{display:block;margin:0 auto 6px;width:${logoSize}px;height:${logoSize}px;object-fit:contain}
   </style></head><body>
+  ${logo ? `<img class="logo" src="${logo}" alt="" />` : ""}
   <div class="c b" style="font-size:15px">${s.shopName}</div>
   <div class="c">${s.address}</div>
   <div class="c">Ph: ${s.mobile}</div>
