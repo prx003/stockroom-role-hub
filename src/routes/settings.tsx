@@ -57,7 +57,7 @@ function SettingsPage() {
         <div className="flex items-center gap-4 sm:col-span-2">
           <img src={preview} alt="Bill logo" className="size-20 rounded-full border" />
           <div className="space-y-2">
-            <div className="flex items-center gap-2"><Switch checked={f.showWatermark !== false} onCheckedChange={(v) => set("showWatermark", v)} /><Label>Show logo in bill background</Label></div>
+            <div className="flex items-center gap-2"><Switch checked={f.showWatermark !== false} onCheckedChange={(v) => set("showWatermark", v)} /><Label>Show GK logo on bills and till receipts</Label></div>
             <div className="flex gap-2">
               <Input type="file" accept="image/png,image/jpeg" onChange={(e) => onLogo(e.target.files?.[0])} />
               {f.logo && <Button variant="outline" onClick={() => set("logo", undefined)}>Use GK logo</Button>}
