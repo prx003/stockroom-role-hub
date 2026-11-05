@@ -296,6 +296,8 @@ export interface Settings {
   pointValue: number;
   thermalWidth: 58 | 80;
   footerNote: string;
+  wishes?: string | undefined;
+  showWatermark?: boolean | undefined;
   notifications: boolean;
   upiId?: string | undefined;
 }

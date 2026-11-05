@@ -14,6 +14,7 @@ import {
   ReceiptText,
   Undo2,
   Wallet,
+  Settings2,
   LogOut,
   PanelLeftClose,
   PanelLeft,
@@ -67,6 +68,7 @@ export const NAV: { key: PageKey; label: string; to: string; icon: typeof Packag
   { key: "returns", label: "Sales Returns", to: "/returns", icon: Undo2 },
   { key: "expenses", label: "Expenses", to: "/expenses", icon: Wallet },
   { key: "employees", label: "Employees", to: "/employees", icon: Users },
+  { key: "settings", label: "Bill Settings", to: "/settings", icon: Settings2 },
 ];
 
 function NavList({ onNavigate, collapsed }: { onNavigate?: () => void; collapsed?: boolean }) {
