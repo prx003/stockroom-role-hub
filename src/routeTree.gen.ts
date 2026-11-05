@@ -24,6 +24,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as SalesRouteImport } from './routes/sales'
 import { Route as SuppliersRouteImport } from './routes/suppliers'
+import { Route as ApiSeedStaffRouteImport } from './routes/api/seed-staff'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -100,6 +101,11 @@ const SuppliersRoute = SuppliersRouteImport.update({
   path: '/suppliers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSeedStaffRoute = ApiSeedStaffRouteImport.update({
+  id: '/api/seed-staff',
+  path: '/api/seed-staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/returns': typeof ReturnsRoute
   '/sales': typeof SalesRoute
   '/suppliers': typeof SuppliersRoute
+  '/api/seed-staff': typeof ApiSeedStaffRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
   '/returns': typeof ReturnsRoute
   '/sales': typeof SalesRoute
   '/suppliers': typeof SuppliersRoute
+  '/api/seed-staff': typeof ApiSeedStaffRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -152,6 +160,7 @@ export interface FileRoutesById {
   '/returns': typeof ReturnsRoute
   '/sales': typeof SalesRoute
   '/suppliers': typeof SuppliersRoute
+  '/api/seed-staff': typeof ApiSeedStaffRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/sales'
     | '/suppliers'
+    | '/api/seed-staff'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/sales'
     | '/suppliers'
+    | '/api/seed-staff'
   id:
     | '__root__'
     | '/'
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/sales'
     | '/suppliers'
+    | '/api/seed-staff'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -223,6 +235,7 @@ export interface RootRouteChildren {
   ReturnsRoute: typeof ReturnsRoute
   SalesRoute: typeof SalesRoute
   SuppliersRoute: typeof SuppliersRoute
+  ApiSeedStaffRoute: typeof ApiSeedStaffRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -332,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SuppliersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/seed-staff': {
+      id: '/api/seed-staff'
+      path: '/api/seed-staff'
+      fullPath: '/api/seed-staff'
+      preLoaderRoute: typeof ApiSeedStaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -351,6 +371,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReturnsRoute: ReturnsRoute,
   SalesRoute: SalesRoute,
   SuppliersRoute: SuppliersRoute,
+  ApiSeedStaffRoute: ApiSeedStaffRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
