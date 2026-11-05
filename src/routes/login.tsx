@@ -111,23 +111,6 @@ function LoginPage() {
     }
   };
 
-  const forgot = async () => {
-    if (!email.trim()) {
-      toast.error("Enter your email first");
-      return;
-    }
-    const client = supabase;
-    if (!client) {
-      toast.error("Online accounts aren't connected yet. Connect your Supabase project in project Settings, then try again.");
-      return;
-    }
-    const { error } = await client.auth.resetPasswordForEmail(email.trim(), {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
-    if (error) toast.error(error.message);
-    else toast.success("Password reset link sent to your email");
-  };
-
   return (
     <div className="grid min-h-screen bg-background lg:grid-cols-2">
       <div className="relative hidden flex-col justify-between bg-sidebar p-10 text-sidebar-foreground lg:flex">
@@ -160,7 +143,7 @@ function LoginPage() {
           <p className="mt-1 text-sm text-muted-foreground">
             {mode === "signin"
               ? "Use your shop account email and password."
-              : "The first account created becomes the shop Admin."}
+              : ""}
           </p>
           {backendMissing && (
             <p className="mt-3 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive">
@@ -210,24 +193,6 @@ function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-4 flex items-center justify-between text-xs">
-            <button
-              type="button"
-              className="font-medium text-primary hover:underline"
-              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            >
-              {mode === "signin" ? "Create a new account" : "I already have an account"}
-            </button>
-            {mode === "signin" && (
-              <button
-                type="button"
-                className="text-muted-foreground hover:underline"
-                onClick={forgot}
-              >
-                Forgot password?
-              </button>
-            )}
-          </div>
         </Card>
       </div>
     </div>
